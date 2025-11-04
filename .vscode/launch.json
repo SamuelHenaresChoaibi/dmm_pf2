@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib\\widgets\\drag_widget.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib\\widgets\\drag_widget.dart"
+        }
+    ]
+}
