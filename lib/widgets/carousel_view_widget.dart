@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
+/// Se utiliza StatelessWidget porque este carrusel de imágenes no necesita
+/// mantener ningún estado interno - simplemente muestra una lista fija de
+/// imágenes sin ninguna interactividad que requiera cambios de estado
 class CarouselDemo extends StatelessWidget {
   const CarouselDemo({super.key});
 
+  /// Construye un carrusel de imágenes con pesos flexibles:
+  /// - [1,15,1]: distribuye el espacio para dar énfasis a la imagen central
+  /// - scrollDirection: permite desplazamiento horizontal
+  /// - consumeMaxWeight: asegura que use todo el espacio disponible
   static Widget buildCarousel() {
     return CarouselView.weighted(
       flexWeights: const [1,15,1],
@@ -17,6 +24,8 @@ class CarouselDemo extends StatelessWidget {
     );
   }
 
+  /// Construye el widget final con una altura fija de 300 unidades
+  /// para asegurar que el carrusel tenga un tamaño consistente
   @override
   Widget build(BuildContext context) {
     return SizedBox(

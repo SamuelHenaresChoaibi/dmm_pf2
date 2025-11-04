@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Se utiliza StatefulWidget porque necesitamos mantener y alternar el estado
+/// _showFirst que controla qué imagen se muestra. Además, el widget necesita
+/// recordar su estado actual para la animación de transición entre imágenes
 class SwitcherDemo extends StatefulWidget {
   const SwitcherDemo({super.key});
 
@@ -8,15 +11,22 @@ class SwitcherDemo extends StatefulWidget {
 }
 
 class _SwitcherDemoState extends State<SwitcherDemo> {
+  /// Controla qué imagen se muestra: true para la primera, false para la segunda
   bool _showFirst = true;
 
+  /// Construye el widget con:
+  /// - GestureDetector para detectar toques
+  /// - AnimatedSwitcher para la transición animada entre imágenes
+  /// - Contenedores con tamaño fijo para las imágenes
   @override
   Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
         onTap: () => setState(() => _showFirst = !_showFirst),
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 200),
+          /// Duración de la animación de transición
+          duration: const Duration(milliseconds: 500),
+          /// Constructor de la transición: usa una animación de escala
           transitionBuilder: (widget, animation) =>
               ScaleTransition(scale: animation, child: widget),
           child: _showFirst
