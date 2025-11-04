@@ -1,6 +1,9 @@
 import 'package:dmm_pf2/models/persona.dart';
 import 'package:flutter/material.dart';
 
+/// Se utiliza StatefulWidget porque necesitamos mantener y actualizar el estado
+/// de la persona (_persona) cuando se modifica en la página personal y
+/// vuelve a esta pantalla
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -9,16 +12,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  /// Estilo de texto común para toda la aplicación
   final TextStyle _textStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+  /// Color principal para elementos interactivos y la barra superior
   final Color _screenPrimaryColor = Colors.deepPurple;
+  /// Color de fondo oscuro para la pantalla
   final Color _backGroundColor = Color.fromARGB(255, 53, 53, 53);
 
   late Persona _persona;
 
+  /// Inicializa el estado con una persona con datos por defecto
   @override
   void initState() {
     super.initState();
@@ -32,6 +39,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /// Construye la interfaz principal de la aplicación con:
+  /// - Una barra superior con el título
+  /// - Un icono de inicio y mensaje de bienvenida
+  /// - Botones para mostrar información y navegar entre páginas
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
-            _buildFloatingActionButton(context),
+            _buildFloatingActionButtonPersonaInfo(context),
 
             const SizedBox(height: 30),
 
@@ -70,10 +81,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildFloatingActionButton(BuildContext context) {
+  /// Construye el botón principal que muestra la información de la persona actual
+  Widget _buildFloatingActionButtonPersonaInfo(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        showDialog(context: context, builder: (ctx) => _crearInfoDialog(ctx));
+        showDialog(context: context, builder: (ctx) => _buildInfoDialog(ctx));
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: _screenPrimaryColor,
@@ -108,6 +120,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /// Construye el botón de navegación a la página personal
+  /// Permite editar los datos de la persona y actualiza el estado al volver
   Widget _buildFloatingActionButtonPersonalPage(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -138,6 +152,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /// Construye el botón de navegación a la página de demostración de widgets
   Widget _buildFloatingActionButtonWidgetPage(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -159,7 +174,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Dialog _crearInfoDialog(BuildContext context) {
+  /// Crea un diálogo que muestra toda la información de la persona actual
+  /// de manera formateada y con la opción de cerrar
+  Dialog _buildInfoDialog(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

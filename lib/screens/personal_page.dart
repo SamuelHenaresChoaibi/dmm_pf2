@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:dmm_pf2/models/persona.dart';
 
+/// Se utiliza StatefulWidget porque esta página maneja múltiples estados:
+/// - Campos de texto que cambian con la entrada del usuario
+/// - Estado de inicialización (_isInit) para cargar datos iniciales
+/// - Controladores de texto que necesitan actualizarse
+/// - Datos de persona que se modifican y persisten entre rebuilds
 class PersonalPage extends StatefulWidget {
   const PersonalPage({super.key});
 
@@ -9,20 +14,25 @@ class PersonalPage extends StatefulWidget {
 }
 
 class _PersonalPageState extends State<PersonalPage> {
+  /// Estilo de texto común para la interfaz
   final TextStyle _textStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+  /// Color principal para elementos interactivos
   final Color _screenPrimaryColor = Colors.deepPurple;
+  /// Color de fondo de la pantalla
   final Color _backgroundColorScreen = Color.fromARGB(255, 53, 53, 53);
 
+  /// Variables para almacenar temporalmente los datos del formulario
   String _nombre = '';
   String _apellido = '';
   String _fechaNacimiento = '';
   String _email = '';
   String _password = '';
 
+  /// Controladores para los campos de texto del formulario
   TextEditingController _inputFieldNombreController = TextEditingController();
   TextEditingController _inputFieldApellidoController = TextEditingController();
   TextEditingController _inputFieldFechaController = TextEditingController();
@@ -32,6 +42,7 @@ class _PersonalPageState extends State<PersonalPage> {
   late Persona _persona;
   bool _isInit = true;
 
+  /// Inicializa los controladores de texto para cada campo del formulario
   @override
   void initState() {
     super.initState();
@@ -42,6 +53,8 @@ class _PersonalPageState extends State<PersonalPage> {
     _inputFieldPasswordController = TextEditingController();
   }
 
+  /// Carga los datos de la persona recibida como argumento
+  /// y los asigna a los campos del formulario
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -66,6 +79,8 @@ class _PersonalPageState extends State<PersonalPage> {
     }
   }
 
+  /// Construye la interfaz del formulario con campos para cada dato
+  /// de la persona y botones para guardar o limpiar
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,17 +96,17 @@ class _PersonalPageState extends State<PersonalPage> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              _crearNombreForm(),
+              _buildNombreForm(),
               SizedBox(height: 20),
-              _crearApellidoCampoForm(),
+              _buildApellidoCampoForm(),
               SizedBox(height: 20),
-              _crearFechaNacimientoCampoForm(),
+              _buildFechaNacimientoCampoForm(),
               SizedBox(height: 20),
-              _crearMailCampoForm(),
+              _buildMailCampoForm(),
               SizedBox(height: 20),
-              _crearPasswordCampoForm(),
+              _buildPasswordCampoForm(),
               SizedBox(height: 20),
-              _crearFilaBotones(),
+              _buildFilaBotones(),
             ],
           ),
         ),
@@ -99,7 +114,8 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  TextField _crearNombreForm() {
+  /// Crea el campo de texto para el nombre con capitalización de frases
+  TextField _buildNombreForm() {
     return TextField(
       textCapitalization: TextCapitalization.sentences,
       controller: _inputFieldNombreController,
@@ -121,7 +137,8 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  TextField _crearApellidoCampoForm() {
+  /// Crea el campo de texto para el apellido con capitalización de frases
+  TextField _buildApellidoCampoForm() {
     return TextField(
       textCapitalization: TextCapitalization.sentences,
       style: TextStyle(color: Colors.white),
@@ -143,7 +160,9 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  Widget _crearFechaNacimientoCampoForm() {
+  /// Crea un campo de texto de solo lectura que al tocarlo muestra
+  /// un selector de fecha
+  Widget _buildFechaNacimientoCampoForm() {
     return TextField(
       readOnly: true,
       controller: _inputFieldFechaController,
@@ -168,6 +187,8 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
+  /// Muestra un diálogo para seleccionar la fecha de nacimiento
+  /// y actualiza el campo correspondiente
   void _seleccionarFecha(BuildContext context) async {
     DateTime? picked = await showDatePicker(
       context: context,
@@ -184,7 +205,8 @@ class _PersonalPageState extends State<PersonalPage> {
     }
   }
 
-  TextField _crearMailCampoForm() {
+  /// Crea el campo de texto para el email con teclado de tipo email
+  TextField _buildMailCampoForm() {
     return TextField(
       keyboardType: TextInputType.emailAddress,
       controller: _inputFieldMailController,
@@ -206,7 +228,8 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  TextField _crearPasswordCampoForm() {
+  /// Crea el campo de texto para la contraseña con modo oculto
+  TextField _buildPasswordCampoForm() {
     return TextField(
       obscureText: true,
       style: TextStyle(color: Colors.white),
@@ -228,7 +251,9 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  FloatingActionButton _crearBotonEnviar() {
+  /// Crea un botón flotante que guarda los datos del formulario
+  /// y vuelve a la pantalla anterior con los datos de la persona actualizados
+  FloatingActionButton _buildBotonEnviar() {
     return FloatingActionButton(
       heroTag: null,
       backgroundColor: _screenPrimaryColor,
@@ -246,7 +271,8 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  FloatingActionButton _crearBotonLimpiar() {
+  /// Crea un botón flotante que limpia todos los campos del formulario
+  FloatingActionButton _buildBotonLimpiar() {
     return FloatingActionButton(
       heroTag: null,
       backgroundColor: _screenPrimaryColor,
@@ -263,10 +289,11 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  Row _crearFilaBotones() {
+  /// Crea una fila con los botones de limpiar y enviar 
+  Row _buildFilaBotones() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [_crearBotonLimpiar(), _crearBotonEnviar()],
+      children: [_buildBotonLimpiar(), _buildBotonEnviar()],
     );
   }
 }
