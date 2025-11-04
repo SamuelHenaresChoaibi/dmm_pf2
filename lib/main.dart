@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
+import 'screens/personal_page.dart';
+import 'routes/routes.dart';
 
 void main() {
   runApp(const PF2());
@@ -12,7 +14,10 @@ class PF2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      routes: {
+        getAppRoutes().keys.first: (context) => HomePage(),
+        getAppRoutes().keys.elementAt(1): (context) => PersonalPage(),
+      },
     );
   }
 }
