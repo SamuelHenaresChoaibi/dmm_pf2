@@ -26,6 +26,7 @@ class _SwitcherDemoState extends State<SwitcherDemo> {
         child: AnimatedSwitcher(
           /// Duración de la animación de transición
           duration: const Duration(milliseconds: 500),
+
           /// Constructor de la transición: usa una animación de escala
           transitionBuilder: (widget, animation) =>
               ScaleTransition(scale: animation, child: widget),
@@ -34,13 +35,19 @@ class _SwitcherDemoState extends State<SwitcherDemo> {
                   key: const ValueKey(1),
                   width: 150,
                   height: 150,
-                  child: Image.network('https://s3.getstickerpack.com/storage/uploads/sticker-pack/shitpost-gifs/sticker_11.gif?e435dc30efb23e40bd62417271e319c9&d=200x200', fit: BoxFit.cover),
-                  )
+                  child: Image.network(
+                    'https://s3.getstickerpack.com/storage/uploads/sticker-pack/shitpost-gifs/sticker_11.gif?e435dc30efb23e40bd62417271e319c9&d=200x200',
+                    fit: BoxFit.cover,
+                  ),
+                )
               : Container(
                   key: const ValueKey(2),
                   width: 150,
                   height: 150,
-                  child: Image.network('https://media.tenor.com/cuov8Q1oUwYAAAAM/shitpost.gif', fit: BoxFit.cover),
+                  child: Image.network(
+                    'https://media.tenor.com/cuov8Q1oUwYAAAAM/shitpost.gif',
+                    fit: BoxFit.cover,
+                  ),
                 ),
         ),
       ),

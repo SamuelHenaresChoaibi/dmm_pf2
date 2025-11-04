@@ -24,6 +24,7 @@ class WidgetPage extends StatelessWidget {
 
   /// Color principal para elementos interactivos y bordes
   final Color _screenPrimaryColor = Colors.deepPurple;
+
   /// Color de fondo oscuro para la pantalla
   final Color _backgroundColorScreen = Color.fromARGB(255, 53, 53, 53);
 
@@ -41,9 +42,7 @@ class WidgetPage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            _widgetsColumn()
-            ],
+          children: [_widgetsColumn()],
         ),
       ),
     );
@@ -53,7 +52,11 @@ class WidgetPage extends StatelessWidget {
   Widget _widgetsColumn() {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [_widgetCarousel(), SizedBox(height: 30), _widgetAnimatedSwitched()],
+      children: [
+        _widgetCarousel(),
+        SizedBox(height: 30),
+        _widgetAnimatedSwitched(),
+      ],
     );
   }
 
@@ -93,10 +96,7 @@ class WidgetPage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            'Animated Switcher',
-            style: _textStyle,
-          ),
+          Text('Animated Switcher', style: _textStyle),
           const SizedBox(height: 10),
           const SwitcherDemo(),
         ],

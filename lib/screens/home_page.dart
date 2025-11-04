@@ -18,8 +18,10 @@ class _HomePageState extends State<HomePage> {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+
   /// Color principal para elementos interactivos y la barra superior
   final Color _screenPrimaryColor = Colors.deepPurple;
+
   /// Color de fondo oscuro para la pantalla
   final Color _backGroundColor = Color.fromARGB(255, 53, 53, 53);
 

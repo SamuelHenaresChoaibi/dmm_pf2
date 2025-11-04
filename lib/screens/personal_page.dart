@@ -20,8 +20,10 @@ class _PersonalPageState extends State<PersonalPage> {
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );
+
   /// Color principal para elementos interactivos
   final Color _screenPrimaryColor = Colors.deepPurple;
+
   /// Color de fondo de la pantalla
   final Color _backgroundColorScreen = Color.fromARGB(255, 53, 53, 53);
 
@@ -289,7 +291,7 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 
-  /// Crea una fila con los botones de limpiar y enviar 
+  /// Crea una fila con los botones de limpiar y enviar
   Row _buildFilaBotones() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
