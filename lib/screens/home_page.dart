@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
   State<HomePage> createState() => _HomePageState();
 }
 
@@ -45,54 +46,22 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildFloatingActionButton(context),
             const SizedBox(height: 100),
-            const Text(
+            Icon(Icons.home, size: 100, color: Colors.white),
+            const SizedBox(height: 25),
+            Text(
               '¡Bienvenido al PF2 de Samuel Henares Choaibi!',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+              style: _textStyle,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
+            _buildFloatingActionButton(context),
 
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: _screenPrimaryColor,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-              ),
-              onPressed: () async {
-                final result = await Navigator.pushNamed(
-                  context,
-                  '/personal',
-                  arguments: _persona,
-                );
-                if (result != null && result is Persona) {
-                  setState(() {
-                    _persona = result;
-                  });
-                }
-              },
-              child: Text('Ir a PersonalPage', style: _textStyle),
-            ),
+            const SizedBox(height: 30),
 
+            _buildFloatingActionButtonPersonalPage(context),
             const SizedBox(height: 12),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: _screenPrimaryColor,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-              ),
-              onPressed: () {},
-              child: Text('Ir a WidgetPage', style: _textStyle),
-            ),
+            _buildFloatingActionButtonWidgetPage(context),
 
             const SizedBox(height: 200),
           ],
@@ -101,25 +70,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Column _buildFloatingActionButton(BuildContext context) {
-    return Column(
-      children: [
-        ElevatedButton(
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (ctx) => _crearInfoDialog(ctx),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: _screenPrimaryColor,
-            shape: const CircleBorder(),
-            minimumSize: const Size(140, 140),
-            padding: EdgeInsets.zero,
-          ),
-          child: const Icon(
+  Widget _buildFloatingActionButton(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        showDialog(context: context, builder: (ctx) => _crearInfoDialog(ctx));
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: _screenPrimaryColor,
+        shape: const StadiumBorder(),
+        minimumSize: const Size(160, 64),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const Icon(
             Icons.info_outline,
-            size: 100,
+            size: 28,
             color: Colors.white,
             shadows: [
               Shadow(
@@ -129,14 +97,65 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Mostrar información de la persona actual',
-          style: TextStyle(fontSize: 20, color: Colors.white24),
-          textAlign: TextAlign.center,
-        ),
-      ],
+          const SizedBox(width: 12),
+          const Text(
+            'Mostrar información de la persona actual',
+            style: TextStyle(fontSize: 16, color: Colors.white),
+            textAlign: TextAlign.left,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFloatingActionButtonPersonalPage(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: _screenPrimaryColor,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      ),
+      onPressed: () async {
+        final result = await Navigator.pushNamed(
+          context,
+          '/personal',
+          arguments: _persona,
+        );
+        if (result != null && result is Persona) {
+          setState(() {
+            _persona = result;
+          });
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.person, size: 24, color: Colors.white),
+          SizedBox(width: 8),
+          Text('Ir a PersonalPage', style: _textStyle),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFloatingActionButtonWidgetPage(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: _screenPrimaryColor,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/widget');
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.widgets, size: 24, color: Colors.white),
+          SizedBox(width: 8),
+          Text('Ir a WidgetPage', style: _textStyle),
+        ],
+      ),
     );
   }
 
@@ -155,11 +174,11 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 20),
             Text(
-              'Nombre: ${_persona.getNombre()}\n'
-              'Apellido: ${_persona.getApellido()}\n'
-              'Fecha de nacimiento: ${_persona.getFechaNacimiento()}\n'
-              'Email: ${_persona.getEmail()}\n'
-              'Password: ${_persona.getPassword()}\n',
+              '- Nombre: ${_persona.getNombre().isEmpty ? "Sin nombre" : _persona.getNombre()}\n\n'
+              '- Apellido: ${_persona.getApellido().isEmpty ? "Sin apellido" : _persona.getApellido()}\n\n'
+              '- Fecha de nacimiento: ${_persona.getFechaNacimiento().isEmpty ? "Sin fecha de nacimiento" : _persona.getFechaNacimiento()}\n\n'
+              '- Email: ${_persona.getEmail().isEmpty ? "Sin email" : _persona.getEmail()}\n\n'
+              '- Password: ${_persona.getPassword().isEmpty ? "Sin password" : _persona.getPassword()}\n\n',
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
